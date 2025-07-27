@@ -1,0 +1,22 @@
+{
+  "coding": {
+    "template": "You are a coding expert. Write a {language} function that {task}.",
+    "example": "Write a Python function that finds the factorial of a number."
+  },
+  "blog": {
+    "template": "Write a {tone} blog post about {topic}. Include engaging headings and examples.",
+    "example": "Write a friendly blog post about learning data science from scratch."
+  },
+  "summarize": {
+    "template": "Summarize the following text in {style} style: \"{text}\"",
+    "example": "Summarize the following in bullet points: \"Artificial Intelligence is transforming industries...\""
+  },
+  "email": {
+    "template": "Draft a {tone} email to {recipient} regarding {subject}.",
+    "example": "Draft a professional email to HR regarding my internship extension."
+  },
+  "creative": {
+    "template": "Write a {genre} story titled '{title}' with a plot involving {element}.",
+    "example": "Write a sci-fi story titled 'The Last Transmission' involving a time-traveling astronaut."
+  }
+}

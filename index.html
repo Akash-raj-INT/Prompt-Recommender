@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prompt Recommender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      color: #333;
+    }
+    label, select, input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    textarea {
+      height: 100px;
+    }
+    button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #output {
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🎯 Prompt Recommender</h2>
+
+  <form id="promptForm">
+    <label for="goal">Select Goal:</label>
+    <select id="goal" required>
+      <option value="coding">Coding</option>
+      <option value="blog">Blog Writing</option>
+      <option value="summarize">Summarization</option>
+      <option value="email">Email Writing</option>
+      <option value="creative">Creative Writing</option>
+    </select>
+
+    <label for="input1">Input 1:</label>
+    <input type="text" id="input1" placeholder="e.g., Python / enthusiastic / bullet points / HR / sci-fi" required>
+
+    <label for="input2">Input 2:</label>
+    <input type="text" id="input2" placeholder="e.g., sort a list / AI in health / sample text / internship / aliens" required>
+
+    <label for="input3">Input 3 (if needed):</label>
+    <input type="text" id="input3" placeholder="e.g., recipient / style / title / element">
+
+    <button type="submit">Generate Prompt</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    document.getElementById('promptForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const goal = document.getElementById('goal').value;
+      const input1 = document.getElementById('input1').value;
+      const input2 = document.getElementById('input2').value;
+      const input3 = document.getElementById('input3').value;
+
+      let inputs = {};
+
+      switch (goal) {
+        case 'coding':
+          inputs = { language: input1, task: input2 };
+          break;
+        case 'blog':
+          inputs = { tone: input1, topic: input2 };
+          break;
+        case 'summarize':
+          inputs = { style: input1, text: input2 };
+          break;
+        case 'email':
+          inputs = { tone: input1, recipient: input2, subject: input3 };
+          break;
+        case 'creative':
+          inputs = { genre: input1, title: input2, element: input3 };
+          break;
+      }
+
+      
+     try {
+    const response = await fetch('http://127.0.0.1:5000/get_prompt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ goal, inputs })
+    });
+
+    const result = await response.json();
+    document.getElementById('output').innerText = result.prompt || result.error;
+
+  } catch (error) {
+    document.getElementById('output').innerText = 'Error: Could not connect to backend.';
+  }
+  });
+
+    
+  </script>
+
+</body>
+</html>
